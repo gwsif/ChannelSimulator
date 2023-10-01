@@ -13,12 +13,13 @@
 
 # ANNOUNCE SCRIPT EXECUTION
 echo "[INFO] display_menu.sh executing..."
+echo "::::::::::::::::::::::::::::::::::::::::::::::::::::"
 
 # ALWAYS SOURCE OUR CONFIG FIRST
 source ""$1"/channel_simulator.cfg"
 
 # DEBUG ECHOES
-echo "[INFO] FOUND CS CONFIG FILEPATH AT:$CS_CONFIG_FILE"
+#echo "[INFO] FOUND CS CONFIG FILEPATH AT:$CS_CONFIG_FILE"
 
 # BEGIN MENU
 echo "SELECT AN OPTION PLEASE:"
@@ -60,21 +61,30 @@ do
 			echo "$MENU_OPTION - Stop Headless Stream"
 
 		    # CHECK IF DISPLAY IS OPEN
-		    CS_XVFB_STATUS="$(xdpyinfo -display :100 >/dev/null 2>&1 && echo "open" || echo "closed")"
+		    CS_XVFB_STATUS="$(xdpyinfo -display $CS_XVFB_DISPLAY_NUM >/dev/null 2>&1 && echo "open" || echo "closed")"
+
+			# CHECK IF STREAM IS OPEN
+			CS_NC_PID="$(pgrep -x "nc")"
 
 		    # STOP XVFB IF DISPLAY IS OPEN
-			if [ "$CS_XVFB_STATUS" == "open" ]; 
+			#    NOTE: PKILL ON NC HERE MIGHT THROW ISSUES IF MORE THAN ONE PID IS PRESENT!
+			if [[ "$CS_XVFB_STATUS" == "open" ]]; 
 			then
 				#sh -c $CS_XVFB_DISPLAY_NUM 'sudo pkill -f $1'
+				#echo "we doing: pkill -f "Xvfb $CS_XVFB_DISPLAY_NUM""
+				#echo "we doing: kill -9 "$CS_NC_PID""
         		sudo pkill -f "Xvfb $CS_XVFB_DISPLAY_NUM"
+				sudo kill -9 "$CS_NC_PID"
+				
+				# IF FFMPEG IS STILL RUNNING, KILL IT
+				sudo pkill -f ffmpeg
+
+				# ANNOUNCE TO CONSOLE
 				echo "XVFB DISPLAY $CS_XVFB_DISPLAY_NUM TERMINATED"
 			else
 				echo "Xvfb on display $CS_XVFB_DISPLAY_NUM is already closed."
-			fi
+			fi			
 			;;
-
-			# IF FFMPEG IS STILL RUNNING, KILL IT
-
 
 	   "Run ChannelSim")
 			echo "$MENU_OPTION - Run ChannelSim"

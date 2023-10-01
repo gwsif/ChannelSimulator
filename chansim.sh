@@ -2,7 +2,7 @@
 #
 # C H A N N E L  S I M U L A T O R
 # ========================================================================                                                                                                                                                              
-# BASH VERSION 0.25.0 - ©KEVAN PLEDGER 2023
+# BASH VERSION 0.25.1 - ©KEVAN PLEDGER 2023
 # ========================================================================
 # ::::::::::::::::  !EDIT CONFIG FILE PRIOR TO RUNNING!  :::::::::::::::::
 # ------------------------------------------------------------------------
@@ -18,6 +18,9 @@ echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::."
 
 # FIND INSTALL DIRECTORY OF CHANSIM
 CS_INSTALL_PATH="$(pwd)"
+
+# ECHO ATTEMPT TO CONSOLE
+echo "[INFO] LOOKING FOR CONFIG FILE..."
 
 # ALWAYS CHECK FOR EXISTENCE OF CONFIG
 if [[ -f ""$CS_INSTALL_PATH"/channel_simulator.cfg" ]];

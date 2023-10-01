@@ -99,8 +99,11 @@ then
             fi
         
             # RUN OUR VIDEO HERE
-            #DISPLAY=Xvfb $CS_XVFB_DISPLAY_NUM timeout 10s "$CS_MEDIAPLAYER" -I dummy --scale $CS_VIDEO_SCALED --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video "$CS_FILEPATH"
-            timeout 10s vlc "$CS_FILEPATH"
+            #    e.g. translation
+            #    DISPLAY=Xvfb :100 14333s vlc -I dummy --scale 1024x768 --qt-minimal-view --no-qt-name-in-title --no-vice-deco --no-embedded-video /mnt/example/example.avi   
+            DISPLAY=Xvfb $CS_XVFB_DISPLAY_NUM "$4" "$CS_MEDIAPLAYER" -I dummy --scale $CS_VIDEO_SCALED --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video "$CS_FILEPATH"
+            DISPLAY=Xvfb $CS_XVFB_DISPLAY_NUM timeout 10s "$CS_MEDIAPLAYER" -I dummy --scale $CS_VIDEO_SCALED --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video "$CS_FILEPATH"            
+            #timeout 10s vlc --fullscreen --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video "$CS_FILEPATH"
 
             # If youtube url, we just resize it to our display
             # do some stuff ;;
