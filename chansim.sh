@@ -2,9 +2,9 @@
 #
 # C H A N N E L  S I M U L A T O R
 # ========================================================================                                                                                                                                                              
-# BASH VERSION 0.025 - ©KEVAN PLEDGER 2023
+# BASH VERSION 0.25.0 - ©KEVAN PLEDGER 2023
 # ========================================================================
-# :::::::::  !EDIT CONFIG FILE IN CONFIG FOLDER BEFORE RUNNING!  :::::::::
+# ::::::::::::::::  !EDIT CONFIG FILE PRIOR TO RUNNING!  :::::::::::::::::
 # ------------------------------------------------------------------------
 # BEGIN MAIN PROGRAM
 # --------------------
@@ -32,7 +32,7 @@ if [[ -f ""$CS_INSTALL_PATH"/channel_simulator.cfg" ]];
         ./display_menu.sh "$CS_INSTALL_PATH"
     else
         # IF ITS BROKE, BREAK IT AND ERROR
-        echo "[WARNING!] INVALID OR MISSING CONFIG FILE!"
+        echo "[WARNING] INVALID OR MISSING CONFIG FILE!"
         echo "[DEBUG] OUR INSTALL PATH VALUE IS:$CS_INSTALL_PATH"
         echo "---------- BREAKING-------------"
         break

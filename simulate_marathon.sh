@@ -17,6 +17,9 @@
     #    the function should then pass $CS_SHOW_DIR as $1 parameter to play_show function!!!
     #    We can
 
+# ANNOUNCE SCRIPT EXECUTION
+echo "[INFO] simulate_marathon.sh executing..."
+
 # ALWAYS SOURCE OUR CONFIG
 source ""$1"/channel_simulator.cfg"
 
@@ -29,5 +32,5 @@ while true;
 
         # RUN SOME COMMERCIALS
         #    PASS INSTALL PATH AS FIRST ARG!
-        #./play_commercials.sh "$1"
+        ./play_commercials.sh "$1"
     done

@@ -11,8 +11,8 @@
 #    TTY SESSION IS STARTED! USERS ARE ALSO REQUIRED TO HAVE A CONFIG FILE IN THE SAME DIRECTORY AS THIS SCRIPT!
 # -----------------------------------------------------------------------------------------------
 
-# CHANGE DIRECTORIES BACK TO CHANSIM ($1)
-#cd "$1"
+# ANNOUNCE SCRIPT EXECUTION
+echo "[INFO] display_menu.sh executing..."
 
 # ALWAYS SOURCE OUR CONFIG FIRST
 source ""$1"/channel_simulator.cfg"
@@ -33,20 +33,21 @@ do
 			if [ ! "$CS_XVFB_STATUS" == "open" ]; 
 			then
 				# NEED TO INVOKE XVFB WITH ROOT SO WE PROMPT USER!
-				if [ $(id -u) != 0 ];
-				then
-					echo "ROOT PRIVILEGES ARE REQUIRED TO CREATE VIRTUAL DISPLAY!"
-					sudo -b -E Xvfb $CS_XVFB_DISPLAY_NUM -screen 0 "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}x${CS_XVFB_COL_DEPTH}"
-					
-					# SLEEP 1s TO ALLOW FOR XVFB SETUP
-					sleep 1
-				fi
-
+				#if [ $(id -u) != 0 ];
+				#then
+				#	echo "ROOT PRIVILEGES ARE REQUIRED TO CREATE VIRTUAL DISPLAY!"
+				#	sudo -b -E Xvfb $CS_XVFB_DISPLAY_NUM -screen 0 "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}x${CS_XVFB_COL_DEPTH}"
+				#	
+				#	# SLEEP 1s TO ALLOW FOR XVFB SETUP
+				#	sleep 1
+				#fi
+				#
 				# NOW START FFMPEG STREAM IN THE BACKGROUND
-				while true;
-				do
-					ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i :100 -f pulse -i default -c:v libx264 -preset fast -maxrate 2500k -bufsize 5000k -g 60 -vf format=yuv420p -c:a aac -b:a 128k -f avi - | nc -lp 5000 &
-				done &
+				# this causes an infinite loop/memory leak. BAD!
+				#while true;
+				#do
+				#	ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i :100 -f pulse -i default -c:v libx264 -preset fast -maxrate 2500k -bufsize 5000k -g 60 -vf format=yuv420p -c:a aac -b:a 128k -f avi - | nc -lp 5000 &
+				#done &
 			
 				# ANNOUNCE CHANGE TO CONSOLE
 				echo "XVFB DISPLAY $CS_XVFB_DISPLAY_NUM LAUNCHED!"

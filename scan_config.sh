@@ -11,6 +11,9 @@
 # VARIABLES NECESSARY FOR THE OPERATION OF CHANNEL SIMULATOR!
 # ---------------------------------------------------------------------
 
+# ANNOUNCE SCRIPT EXECUTION
+echo "[INFO] scan_config.sh executing..."
+
 # CHANGE DIRECTORIES BACK TO CHANSIM
 cd $HOME/ChannelSimulator
 
@@ -20,7 +23,7 @@ echo "---READING CONFIGURATION FILE---"
 # CHECK FOR EXISTENCE OF CONFIG FILE!
 if ! test -f channel_simulator.cfg;
 	then
-		echo "MISSING OR INVALID CONFIGURATION FILE!"
+		echo "[WARNING] MISSING OR INVALID CONFIGURATION FILE!"
 	else
 
 		# SOURCE CONFIG HERE - ONLY EXCEPTION
@@ -31,10 +34,12 @@ if ! test -f channel_simulator.cfg;
 		echo "$CS_CONFIG_FILE"
 
 		# ANNOUNCE DETECTIONS
-		echo "MODE SELECTION: $CS_MODE"
-        echo "MEDIA PLAYER: $CS_MEDIAPLAYER"
-		echo "COMMERCIAL DIR: $CS_COMM_DIR"
-		echo "COMMERCIAL MIN: $CS_COMM_MIN"
-		echo "COMMERCIAL MAX: $CS_COMM_MAX"
+        echo "---- SCAN CONFIG DEBUG BLOCK--------------"
+		echo "[DEBUG] MODE SELECTION: $CS_MODE"
+        echo "[DEBUG] MEDIA PLAYER: $CS_MEDIAPLAYER"
+		echo "[DEBUG] COMMERCIAL DIR: $CS_COMM_DIR"
+		echo "[DEBUG] COMMERCIAL MIN: $CS_COMM_MIN"
+		echo "[DEBUG] COMMERCIAL MAX: $CS_COMM_MAX"
+        echo "------------------------------------------"
 fi
 
