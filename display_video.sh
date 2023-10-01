@@ -54,6 +54,7 @@ then
     # HEADLESS MODE SET! CHECK IF WE'VE ALREADY DRAWN THE DISPLAY!
     echo "display check!"
     CS_XVFB_STATUS=$(xdpyinfo -display :100 >/dev/null 2>&1 && echo "open" || echo "closed")
+    echo "display is: $XS_XVFB_STATUS"
     if [ $CS_XVFB_STATUS == "closed" ];
     then
         echo "[NOTICE] XVFB DISPLAY $CS_XVFB_DISPLAY_NUM IS NOT CURRENTLY RUNNING!"
