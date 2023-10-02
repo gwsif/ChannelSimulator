@@ -19,10 +19,7 @@ echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::."
 # FIND INSTALL DIRECTORY OF CHANSIM
 CS_INSTALL_PATH="$(pwd)"
 
-# ECHO ATTEMPT TO CONSOLE
-echo "[INFO] LOOKING FOR CONFIG FILE..."
-
-# ALWAYS CHECK FOR EXISTENCE OF CONFIG
+# CHECK FOR EXISTENCE OF CONFIG 
 if [[ -f ""$CS_INSTALL_PATH"/channel_simulator.cfg" ]];
     then
         # IF WE HAVE A CONFIG FILE THEN SOURCE IT
@@ -31,10 +28,30 @@ if [[ -f ""$CS_INSTALL_PATH"/channel_simulator.cfg" ]];
         # AND ANNOUNCE OUR SUCCESS TO CONSOLE
         echo "[SUCCESS] CONFIG FILE FOUND AT:$CS_INSTALL_PATH"
 
-        # RUN OUR MENU AND PASS OUR INSTALL PATH
-        ./display_menu.sh "$CS_INSTALL_PATH"
+        # CHECK DESIRED VIEWING METHOD
+        if [[ $CS_METHOD == "headless" ]];
+            then
+            # ANNOUNCE TO CONSOLE
+            echo "[INFO] HEADLESS MODE DETECTED..."
+
+            # RUN DRAW DISPLAY TO DRAW XVFB AND EXECUTE CHANSIM.SH
+            ./draw_display.sh "$CS_INSTALL_PATH"
+
+            elif [[ $CS_METHOD == "local" ]];
+            then
+            # ANNOUNCE TO CONSOLE
+            echo "[INFO] LOCAL MODE DETECTED..."
+            
+            # RUN CHANSIM.SH
+            ./display_menu.sh "$CS_INSTALL_PATH"
+            else
+            # IF WE HAVE ANY OTHER VALUE WE AREN'T VALID
+            echo "[WARNING] INVALID METHOD SETTING:$CS_METHOD"
+            echo "[WARNING] CS_METHOD MUST BE SET TO 'headless' OR 'local' IN THE CONFIG FILE!"
+        fi
+        
     else
-        # IF ITS BROKE, BREAK IT AND ERROR
+        # IF ITS BROKE, BREAK IT MORE AND ERROR
         echo "[WARNING] INVALID OR MISSING CONFIG FILE!"
         echo "[DEBUG] OUR INSTALL PATH VALUE IS:$CS_INSTALL_PATH"
         echo "---------- BREAKING-------------"
