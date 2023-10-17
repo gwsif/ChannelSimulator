@@ -54,29 +54,7 @@ do
 				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i :100 -f pulse -i default -c:v libx264 -preset fast -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -f avi - | nc -lp $CS_NC_PORT > /dev/null 2>&1 &
 				# This command works - but displays a broken stream. 
 				#nohup ffmpeg -f x11grab -framerate 30 -s "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -r 30 -i "$CS_XVFB_DISPLAY_NUM" -f pulse -an -q 10 -f mpegts - | nc -lp 5000 &
-
-				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i "$CS_XVFB_DISPLAY_NUM" -f pulse -ac 2 -i default -c:v libx264 -preset ultrafast -tune zerolatency -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -f mpegts - | nc -lp 5000 > /dev/null 2>&1 &
-				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i "$CS_XVFB_DISPLAY_NUM" -f pulse -i default -filter_complex "[0:v]fps=30,scale=${CS_XVFB_RES_WIDTH}:${CS_XVFB_RES_HEIGHT}[v];[v][1:a]concat=n=2:v=1:a=1[v_out]" -map "[v_out]" -c:v libx264 -preset ultrafast -tune zerolatency -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -f mpegts - | nc -lp 5000 > /dev/null 2>&1 &
-				
-				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i "$CS_XVFB_DISPLAY_NUM" -f pulse -i default -c:v libx264 -preset ultrafast -tune zerolatency -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -f mpegts - | nc -u -l -p 5000 > /dev/null 2>&1 &
-				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i :100 -f pulse -i default -c:v libx264 -preset fast -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -f avi -map 0 -map 1 -y - | nc -lp $CS_NC_PORT > /dev/null 2>&1 &
-				
-				# improved
-				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i "$CS_XVFB_DISPLAY_NUM" -f pulse -i default -c:v libx264 -pix_fmt yuv420p -preset ultrafast -tune zerolatency -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -f mpegts - | nc -l -p 5000 > /dev/null 2>&1 &
-
-				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i "$CS_XVFB_DISPLAY_NUM" -f pulse -i pipewire -c:v libx264 -pix_fmt yuv420p -preset ultrafast -tune zerolatency -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -strict experimental -b:a 128k -f mpegts - | nc -l -p 5000 > /dev/null 2>&1 &
-				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i "$CS_XVFB_DISPLAY_NUM" -c:v libx264 -pix_fmt yuv420p -preset ultrafast -tune zerolatency -maxrate 2500k -bufsize 2500k -g 60 -f mpegts - | nc -l -p 5000 > /dev/null 2>&1 &
-				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i "$CS_XVFB_DISPLAY_NUM" -c:v libx264 -preset fast -tune zerolatency -f mpegts - | nc -l -p 5000 > /dev/null 2>&1 &
 				nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i "$CS_XVFB_DISPLAY_NUM" -c:v libx264 -preset ultrafast -tune zerolatency -maxrate 2500k -bufsize 2500k -g 60 -f mpegts - | nc -l -p 5000 > /dev/null 2>&1 &
-
-				
-				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i "$CS_XVFB_DISPLAY_NUM" -f pulse -i default -c:v libx264 -preset ultrafast -tune zerolatency -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -f mpegts -udp://192.168.90.236:5000
-
-				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i :100 -f pulse -i default -c:v libx264 -preset fast -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -f avi -map 0 -map 1 -y - | nc -lp $CS_NC_PORT > /dev/null 2>&1 &
-
-				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i :100 -f pulse -i default -c:v libx264 -preset ultrafast -tune zerolatency -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -f mpegts - | nc -u -l -p $CS_NC_PORT > /dev/null 2>&1 &
-				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}" -i "${CS_XVFB_DISPLAY_NUM}" -f pulse -i default -c:v libx264 -preset fast -maxrate 2500k -bufsize 5000k -g 60 -vf format=yuv420p -c:a aac -b:a 128k -f avi - | nc -lp "${CS_NC_PORT}" &
-				#nohup ffmpeg -f x11grab -framerate 30 -video_size "${CS_XVFB_RES_WIDTH}"'x'"${CS_XVFB_RES_HEIGHT}" -i :100 -f pulse -i default -c:v libx265 -preset fast -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -f avi - | nc -lp $CS_NC_PORT > /dev/null 2>&1 &
 			else
 				# THE STREAM IS ALREADY OPEN SO ANNOUNCE TO CONSOLE!
 				echo "[INFO] FFMPEG STREAM ALREADY RUNNING"

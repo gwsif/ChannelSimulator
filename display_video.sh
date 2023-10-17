@@ -46,18 +46,11 @@ then
     echo "[INFO] PLAYING FILE:$CS_FILEPATH"
 
     # AND CALL THE PLAYBACK COMMAND HERE!
-    timeout "$4" "$CS_MEDIAPLAYER" -I dummy --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video --fullscreen "$CS_FILEPATH"
+    #timeout "$4" "$CS_MEDIAPLAYER" -I dummy --qt-minimal-view --no-qt-name-in-title --no-video-title-show --no-video-deco --no-embedded-video --fullscreen "$CS_FILEPATH"
     #timeout 10s "$CS_MEDIAPLAYER" -I dummy --scale $CS_VIDEO_SCALED --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video "$CS_FILEPATH" &>/dev/null 
+    timeout "$4" ffplay -fs "$CS_FILEPATH"
 
 
-##################
-#####
-####
-###
-### THERE IS SOMETHING VERY WRONG WITH THIS LOGIC VVVVV
-###
-#####
-##################
 elif [[ $CS_METHOD == "headless" ]];
 then
     # HEADLESS MODE SET! CHECK IF WE'VE ALREADY DRAWN THE DISPLAY!
@@ -114,13 +107,6 @@ then
             #DISPLAY=Xvfb $CS_XVFB_DISPLAY_NUM "$4" "$CS_MEDIAPLAYER" -I dummy --scale $CS_VIDEO_SCALED --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video "$CS_FILEPATH"
             #DISPLAY="$CS_XVFB_DISPLAY_NUM" timeout 10s "$CS_MEDIAPLAYER" -I dummy --scale $CS_VIDEO_SCALED --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video "$CS_FILEPATH"
             DISPLAY="$CS_XVFB_DISPLAY_NUM" timeout 10s "$CS_MEDIAPLAYER" -I dummy --width="$CS_VIDEO_SCALE_WIDTH" --height="$CS_VIDEO_SCALE_HEIGHT"--qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video "$CS_FILEPATH"
-            
-            # WE SHOULD SAY Display=Ourdisplayvar video_out.sh
-            #    in video_out.sh
-            #    
-            #
-            # what we might need is a run_channelsimulator.sh which  checks if we are headless or not and if we are headless then we will run draw_display.sh and then call the main chansim.sh script.
-            #    the draw_display script draws Xvfb and then runs the main script from there.
 
             #sleep 3
             #timeout 10s vlc --fullscreen --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video "$CS_FILEPATH"
