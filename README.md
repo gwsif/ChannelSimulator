@@ -22,22 +22,21 @@ ChannelSimulator requires that the following packages be installed on your Linux
    ```
    sudo chmod +x chansim.sh display_video.sh play_show.sh play_commercials.sh scan_config.sh simulate_marathon.sh display_menu.sh draw_display.sh channel_simulator.cfg
    ```
-3. Run chansim
+3. Edit the config file `channel_simulator.cfg`. The config file is where everything you can change is specified and it is well commented! 
+4. Run chansim
    ```
    ./chansim
    ```
-4. Edit the config file `channel_simulator.cfg`. The config file is where everything you can change is specified and it is well commented! 
-4. If you are playing back locally (IE: on your own machine) 
+5. If you are playing back locally (IE: on your own machine) 
    - Make sure to set `CS_METHOD` to `local`in `channel_simulator.cfg`
    - Press `3` to start the simulation locally. 
    - *NOTE: This takes over your entire display!*
-5. If you are playing back over a network (headlessly) (IE: over LAN)
+6. If you are playing back over a network (headlessly) (IE: over LAN)
    - Make sure to set `CS_METHOD` to `headless`in `channel_simulator.cfg`
    - Press `1` to start the virtual broadcast 
    - Press `3` to begin the simulation
    - *NOTE: If you stop viewing the stream at any time it will break the stream - however the simulation will continue to run. To re-open the stream, open a new terminal or another terminal tab and run the chansim script again `./chansim.sh` and then press `1` again to bring the stream back online!*
-
-To stop, please use the key combination `ctrl+c` on the window executing the primary script.
+7. To stop please use the key combination `ctrl+c` on the window executing the primary script.
 
 Please note that, by default, ChannelSimulator uses an `Xvfb display` value of `100` (aka id) and `nc` with `port 5000`. If you are currently using any software that conflicts with these defaults, you may change them in the configuration file. Please also note that when restarting the headless stream, a kill command is run on the process `nc` as well as `vlc` so if you are running other instances of these then ChannelSimulator **WILL** interfere with them!
 
