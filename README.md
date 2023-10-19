@@ -2,7 +2,8 @@
 ChannelSimulator is a project that takes local media files in directories that are defined by a configuration file and plays them
 in an order similar to that of a television broadcast. 
 
-### **This software is in beta and may not function as intended.**
+### PLEASE NOTE  
+*Only single show and commercial directories are supported at this time (Marathon Mode). This is a temporary limitation! Stay tuned!*
 
 ## REQUIREMENTS
 ChannelSimulator requires that the following packages be installed on your Linux system (Other OS not currently supported at this time!):
