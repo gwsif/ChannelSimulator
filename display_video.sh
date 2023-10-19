@@ -102,8 +102,11 @@ then
             fi
         
             # RUN OUR VIDEO HERE
-            #    e.g. translation
-            DISPLAY="$CS_XVFB_DISPLAY_NUM" timeout 10s "$CS_MEDIAPLAYER" -I dummy --width="$CS_VIDEO_SCALE_WIDTH" --height="$CS_VIDEO_SCALE_HEIGHT" --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video --no-osd "$CS_FILEPATH"
+            #    Old Logic Preserved temporarily
+            #DISPLAY="$CS_XVFB_DISPLAY_NUM" timeout $4 "$CS_MEDIAPLAYER" -I dummy --width="$CS_VIDEO_SCALE_WIDTH" --height="$CS_VIDEO_SCALE_HEIGHT" --audio-filter normalizer --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video --no-osd "$CS_FILEPATH"
+            #DISPLAY="$CS_XVFB_DISPLAY_NUM" timeout 10s "$CS_MEDIAPLAYER" -I dummy --width="$CS_VIDEO_SCALE_WIDTH" --height="$CS_VIDEO_SCALE_HEIGHT" --audio-filter normvol --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video --no-osd "$CS_FILEPATH"
+            #DISPLAY="$CS_XVFB_DISPLAY_NUM" timeout 10s "$CS_MEDIAPLAYER" --fullscreen --audio-filter normvol --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video --no-osd "$CS_FILEPATH"
+            DISPLAY="$CS_XVFB_DISPLAY_NUM" timeout $4 "$CS_MEDIAPLAYER" --fullscreen --audio-filter normvol --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video --no-osd "$CS_FILEPATH"
                         
             # If youtube url, we just resize it to our display
             # do some stuff ;;

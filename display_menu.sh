@@ -79,7 +79,10 @@ do
 				sudo kill -9 "$CS_NC_PID"
 				
 				# IF FFMPEG IS STILL RUNNING, KILL IT
-				sudo pkill -f ffmpeg
+				sh -c 'sudo pkill -f ffmpeg'
+
+				# IF VLC IS STILL RUNNING, KILL IT
+				sh -c 'sudo killall -9 vlc'
 
 				# ANNOUNCE TO CONSOLE
 				echo "XVFB DISPLAY $CS_XVFB_DISPLAY_NUM TERMINATED"

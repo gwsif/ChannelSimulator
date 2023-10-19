@@ -17,6 +17,24 @@
     #    the function should then pass $CS_SHOW_DIR as $1 parameter to play_show function!!!
     #    We can
 
+# TRAP CTRL-C FOR CLEANUP WHEN WE STOP
+trap ctrl_c INT
+
+# TRAP CTRL-C FOR CLEANUP WHEN WE STOP
+function ctrl_c() {
+    # IF CTRL+C COMBO IS DETECTED THEN USER WISHES TO QUIT
+    echo "[INFO] CHANNELSIMULATOR WAS TOLD TO QUIT."
+    echo "[INFO] PASSWORD MAY BE REQUIRED TO FULLY TERMINATE THE HEADLESS DISPLAY!"
+
+
+    # KILL XVFB FFMPEG, & VLC. i3 GOES WITH XVFB AUTOMATICALLY
+    sh -c "sudo killall Xvfb vlc ffmpeg"
+
+    # ANNOUNCE EXIT TO CONSOLE
+    echo "---CHANNEL SIMULATOR HAS EXITED---"
+    exit 0
+}
+
 # ANNOUNCE SCRIPT EXECUTION
 echo "[INFO] simulate_marathon.sh executing..."
 
