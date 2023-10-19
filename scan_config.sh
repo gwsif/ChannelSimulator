@@ -12,7 +12,7 @@
 # ---------------------------------------------------------------------
 
 # ANNOUNCE SCRIPT EXECUTION
-echo "[INFO] scan_config.sh executing..."
+echo "[INFO] RUNNING scan_config.sh"
 
 # CHANGE DIRECTORIES BACK TO CHANSIM
 cd $HOME/ChannelSimulator

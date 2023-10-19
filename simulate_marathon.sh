@@ -23,7 +23,8 @@ trap ctrl_c INT
 # TRAP CTRL-C FOR CLEANUP WHEN WE STOP
 function ctrl_c() {
     # IF CTRL+C COMBO IS DETECTED THEN USER WISHES TO QUIT
-    echo "[INFO] CHANNELSIMULATOR WAS TOLD TO QUIT."
+    echo "---------------------------------- ALERT ----------------------------------"
+    echo "[INFO] CHANNELSIMULATOR WAS TOLD TO QUIT SO QUITTING!"
     echo "[INFO] PASSWORD MAY BE REQUIRED TO FULLY TERMINATE THE HEADLESS DISPLAY!"
 
 

@@ -15,7 +15,7 @@
 # $1 = $CS_INSTALL_PATH
 
 # ANNOUNCE SCRIPT EXECUTION
-echo "[INFO] play_commercials.sh executing..."
+echo "[INFO] RUNNING play_commercials.sh"
 
 # RESET OUR CONF LOAD STATE TO CHECK FOR VALID CONFIGURATION FILE
 CS_CONF_LOAD_STATE=0

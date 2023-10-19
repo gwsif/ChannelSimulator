@@ -7,41 +7,29 @@
 # ::::::::::::::::::::::::::::::::::::::::::::.
 #
 # MENU
-#    SIMPLE USER MENU WHICH ASKS FOR INPUT. USERS ARE REQUIRED TO SELECT MENU OPTION 1 ON FIRST RUN ANYTIME A NEW
-#    TTY SESSION IS STARTED! USERS ARE ALSO REQUIRED TO HAVE A CONFIG FILE IN THE SAME DIRECTORY AS THIS SCRIPT!
+#    SIMPLE USER MENU WHICH ASKS FOR INPUT. USERS ARE REQUIRED TO EDIT THE CONFIG FILE PRIOR
+#    TO FIRST RUN!
 # -----------------------------------------------------------------------------------------------
 
 # ANNOUNCE SCRIPT EXECUTION
-echo "[INFO] display_menu.sh executing..."
-echo "::::::::::::::::::::::::::::::::::::::::::::::::::::"
+echo "[INFO] RUNNING display_menu.sh"
+echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::."
+echo ""
 
 # ALWAYS SOURCE OUR CONFIG FIRST
 source ""$1"/channel_simulator.cfg"
 
 # DEBUG ECHOES
-echo "[INFO] FOUND CS CONFIG FILEPATH AT:$CS_CONFIG_FILE"
-echo "[INFO] PASSED VARIABLE:$1"
+#echo "[INFO] FOUND CS CONFIG FILEPATH AT:$CS_CONFIG_FILE"
+#echo "[INFO] PASSED VARIABLE:$1"
 
 # BEGIN MENU
-echo "SELECT AN OPTION PLEASE:"
+echo "CHANNEL SIMULATOR - VERSION $CS_VERSION_NUMBER"
+echo "PLEASE TYPE AN OPTION:"
 select MENU_OPTION in "Start Headless Stream" "Stop Headless Stream" "Run ChannelSim" "Quit"
 do
 	case $MENU_OPTION in
 		"Start Headless Stream")
-
-		    # CHECK IF DISPLAY IS OPEN
-		    CS_XVFB_STATUS=$(xdpyinfo -display :100 >/dev/null 2>&1 && echo "open" || echo "closed")
-
-		    # IF XVFB DISPLAY IS NOT OPEN THEN START IT
-			if [ ! "$CS_XVFB_STATUS" == "open" ]; 
-			then
-				# RUN THE COMMAND TO START THE HEADLESS DISPLAY (WAS WORKING!)
-				nohup Xvfb $CS_XVFB_DISPLAY_NUM -screen 0 "${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT}x${CS_XVFB_COL_DEPTH}" > /dev/null 2>&1 &
-				sleep 1
-			else
-				# ANNOUNCE STATE TO CONSOLE
-				echo "Xvfb on display $CS_XVFB_DISPLAY_NUM is already open!"
-			fi
 
 			# IF THIS HAS VARIABLE HAS DATA, WE HAVE AN OPEN STREAM!
 			CS_STREAM_ALIVE="$(lsof -i :5000)"
@@ -52,10 +40,20 @@ do
 				# SCREEN OPEN SO START FFMPEG STREAM IN THE BACKGROUND
 				nohup sh -c "ffmpeg -f x11grab -nostdin -draw_mouse 0 -framerate 30 -video_size ${CS_XVFB_RES_WIDTH}x${CS_XVFB_RES_HEIGHT} -i ${CS_XVFB_DISPLAY_NUM} -f pulse -i default -c:v libx264 -preset fast -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -f avi - | nc -lp $CS_NC_PORT" > /dev/null 2>&1 &
 
+				# GRAB OUR IP
+				CS_IP_ADDR="$(hostname -I | cut -f1 -d' ')"
+
+				# ANNOUNCE TO CONSOLE
+				echo "[INFO] STREAM LAUNCHED! STREAM MAY BE VIEWED AT THE FOLLOWING LINK:"
+				echo "tcp://$CS_IP_ADDR:$CS_NC_PORT"
 			else
+				# GRAB OUR IP
+				CS_IP_ADDR="$(hostname -I | cut -f1 -d' ')"
+
 				# THE STREAM IS ALREADY OPEN SO ANNOUNCE TO CONSOLE!
-				echo "[INFO] FFMPEG STREAM ALREADY RUNNING"
+				echo "[INFO] CHANNEL SIMULATOR DETECTED FFMPEG STREAM WAS ALREADY RUNNING"
 				echo "[INFO] CHECK USING (lsof -i $CS_NC_PORT)"
+				echo "[INFO] CAN YOU SEE THE STREAM WITH tcp://$CS_IP_ADDR:$CS_NC_PORT ?"
 			fi
 			;;
 

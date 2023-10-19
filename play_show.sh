@@ -15,15 +15,15 @@
 #--------------------------------------------------------------------------------------
 
 # ANNOUNCE SCRIPT EXECUTION
-echo "[INFO] play_show.sh executing..."
+echo "[INFO] RUNNING play_show.sh"
 
 # RESET OUR CONF LOAD STATE TO CHECK FOR VALID CONFIGURATION FILE
 CS_CONF_LOAD_STATE=0
 
 # DEBUG ECHOES
-echo "[DEBUG] PLAY SHOW - GOT DOLLARONE OF $1"
-echo "[DEBUG] PLAY SHOW - GOT GOLLARTWO OF $2"
-echo "[DEBUG] PLAY SHOW - GOT DOLLARTHR OF $3"
+#echo "[DEBUG] PLAY SHOW - GOT DOLLARONE OF $1"
+#echo "[DEBUG] PLAY SHOW - GOT GOLLARTWO OF $2"
+#echo "[DEBUG] PLAY SHOW - GOT DOLLARTHR OF $3"
 
 # ALWAYS SOURCE OUR CONFIG FIRST!
 source ""$1"/channel_simulator.cfg"
