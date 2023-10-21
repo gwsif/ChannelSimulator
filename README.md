@@ -1,3 +1,5 @@
+<div align="center"> <img src="https://github.com/gwsif/ChannelSimulator-BASH/blob/main/GitHub_Header_cropped.png"> </div>
+
 ## CHANNEL SIMULATOR                                                                                               
 ChannelSimulator is a project that takes local media files in directories that are defined by a configuration file and plays them
 in an order similar to that of a television broadcast. 
