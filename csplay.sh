@@ -18,10 +18,9 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
 # ****************************************************************************
 
-# $1 = Expected Video Width
-# $2 = Expected Video Height
-# $3 = Expected Xvfb Display Number (includes :)
-# $4 = Expected Network Port For Playback
+# $1 = Expected Runtime
+# $2 = Expected Filepath
+# $3 = Expected Mediaplayer
 
-# Launches ffmpeg stream piped into nc through local port of choice.
-nohup sh -c "ffmpeg -f x11grab -nostdin -draw_mouse 0 -framerate 30 -video_size $1'x'$2 -i $3 -f pulse -i default -c:v libx264 -preset fast -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -f avi - | nc -lp $4" > /dev/null 2>&1 &
+# Opens a video ($2) in borderless fullscreen for a specified time period ($1) using the specified mediaplayer ($3)
+timeout $1 "$3" --fullscreen --audio-filter normvol --qt-minimal-view --no-qt-name-in-title --no-video-deco --no-embedded-video --no-osd "$2"
