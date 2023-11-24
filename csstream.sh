@@ -23,5 +23,15 @@
 # $3 = Expected Xvfb Display Number (includes :)
 # $4 = Expected Network Port For Playback
 
-# Launches ffmpeg stream piped into nc through local port of choice.
-nohup sh -c "ffmpeg -f x11grab -nostdin -draw_mouse 0 -framerate 30 -video_size $1'x'$2 -i $3 -f pulse -i default -c:v libx264 -preset fast -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -f avi - | nc -lp $4" > /dev/null 2>&1 &
+# Debug block
+#echo "[DEBUG] Running csstream.sh"
+#echo "[DEBUG] starting ffmpeg command"
+#echo "[DEBUG] Vdeo Width: $1"
+#echo "[DEBUG] Vdeo Height: $2"
+#echo "[DEBUG] Display Number: $3"
+#echo "[DEBUG] Port Number: $4"
+
+# Launches ffmpeg stream via tcp stream over local ip and specified port (default)
+nohup sh -c "ffmpeg -f x11grab -nostdin -draw_mouse 0 -framerate 30 -video_size $1'x'$2 -i $3 -f pulse -i default -c:v libx264 -preset fast -maxrate 2500k -bufsize 2500k -g 60 -c:a aac -b:a 128k -listen 1 -f flv http://0.0.0.0:$4" > /dev/null 2>&1 &
+
+

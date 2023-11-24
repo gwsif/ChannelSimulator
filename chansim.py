@@ -36,6 +36,8 @@ cs_comm_path = "/mnt/Commercials/90s" # Filepath for folder containing commercia
 cs_headless_res_width = 800 # Headless display resolution width TODO move this to config file
 cs_headless_res_height = 600 # Headless display resolution height TODO move this to config file
 cs_headles_col_depth = 24 # Headless display color depth (rec 24) TODO move this to config file
+cs_headless_disp_num = ":100"
+cs_headless_port_num = 8080
 
 # Starts the display
     # Start Xvfb and i3 within the same 'with' block
@@ -45,13 +47,14 @@ def start_display():
         xvfb_process = subprocess.Popen(["nohup", "Xvfb", ":100", "-screen", "0", str(cs_headless_res_width) + "x" + str(cs_headless_res_height) + "x" + str(cs_headles_col_depth)], stdout=f, stderr=subprocess.STDOUT)
 
         # Wait for Xvfb to start
-        time.sleep(3)
+        print("[INFO] Pausing for Xvfb...")
+        time.sleep(2)
 
         # Set the DISPLAY environment variable
         os.environ["DISPLAY"] = ":100"
         os.environ["I3SOCK"] = f"{os.environ['HOME']}/.i3/ipc-100"
 
-        #binggpt
+        # binggpt
         env = os.environ.copy()
         env["DISPLAY"] = ":100"
 
@@ -65,13 +68,19 @@ def start_display():
         print("[DEBUG] Detected config directory as: ", str(this_dir))
         print ("[DEBUG] Set absolute config path as: ", str(config_path))
 
+        # Wait for i3 setup
+        print("[INFO] Pausing for i3...")
+        time.sleep(2)
+
+        # Debug echoes
+        print("[INFO] Launching stream...")
         # Start ffmpeg stream
-        ffmpeg_process = subprocess.Popen(["./csstream.sh", str(cs_headless_res_width), str(cs_headless_res_height), ":100", "5000"], stdout=f, stderr=subprocess.STDOUT)
+        ffmpeg_process = subprocess.Popen(["./csstream.sh", str(cs_headless_res_width), str(cs_headless_res_height), str(cs_headless_disp_num), str(cs_headless_port_num)], stdout=f, stderr=subprocess.STDOUT)
 
 # Restarts the stream
 def restart_stream():
     # Start the ffmpeg stream
-    ffmpeg_process = subprocess.Popen(["./csstream.sh", str(cs_headless_res_width), str(cs_headless_res_height), ":100", "5000"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+    ffmpeg_process = subprocess.Popen(["./csstream.sh", str(cs_headless_res_width), str(cs_headless_res_height), str(cs_headless_disp_num), str(cs_headless_port_num)], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 # Runs a menu
 def show_menu():
