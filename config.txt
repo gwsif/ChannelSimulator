@@ -1,0 +1,4 @@
+# STREAM SETTINGS
+protocol = udp
+ip = 239.255.0.1
+port = 1234
