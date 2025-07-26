@@ -25,3 +25,25 @@ def parse_config(filepath):
         print(f"Error: Configuration file not found at {filepath}")
         return None
     return config
+
+def parse_timestamps(filepath):
+    """
+    Parses a file containing timestamps and returns a list of timestamps.
+
+    Args:
+        filepath (str): The path to the file containing timestamps.
+
+    Returns:
+        list: A list of timestamps as strings.
+    """
+    timestamps = []
+    try:
+        with open(filepath, 'r') as f:
+            for line in f:
+                line = line.strip()  # Remove leading/trailing whitespace
+                if line and not line.startswith('#'):  # Ignore empty lines and comments
+                    timestamps.append(line)
+    except FileNotFoundError:
+        print(f"Error: Timestamp file not found at {filepath}")
+        return None
+    return timestamps

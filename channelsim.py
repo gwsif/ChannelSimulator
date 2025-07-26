@@ -2,12 +2,20 @@
 # Copyright 2025 Kevan Pledger
 # A simple channel simulator that uses FFmpeg to stream media files over RTP.
 
+
+# todo next: stop playing video at first timestamp and start the commercial break
+
 import os
 import subprocess
 import config_parser
 import streamer
 import streamconfig
 import random
+import pathlib
+import media_controller
+
+# Track our commercial breaks
+comm_break = 0
 
 # welcome message
 print("STARTING CHANNEL SIMULATOR 0.4.0...")
@@ -87,12 +95,29 @@ while True:
                 stream_config.port
             )
 
+            ############
             # Choose a random video from the media dictionary
-            active_video = random.choice(list(media.values()))
-            print("[SYSTEM] MEDIA CHOSEN: " + str(active_video))
+            active_video = media_controller.choose_random_video(media)
+            print("[DEBUG] Active video chosen: " + str(active_video))
 
-            # Load the chosen video into the stream
-            streamer.play_video(active_video, streamer_proc.stdin)
+            # Get the timestamp for the chosen video file
+            active_video_ts = media_controller.get_timestamps(active_video, comm_break)
+            print("[DEBUG] Active video timestamp: " + str(active_video_ts))
+        
+            # Load the chosen video into the stream and, if its the start of the show
+            #    (ie comm_break == 0), play it from the start and not the active_video_ts!
+            
+            if active_video_ts is None or comm_break == 0:
+                print("[DEBUG] No timestamp found or this is the first commercial break, playing from start.")
+                active_video_ts = None
+            
+            # Streamer will play from start if active_video_ts is None and comm_break is 0 but will
+            #   play video if active_video_ts is not None AND comm_break is greater than 0 (meaning
+            #   we are in a commercial break)
+            streamer.play_video(active_video, streamer_proc.stdin, active_video_ts)
+
+            # Advance the commercial break counter
+            comm_break += 1
 
         # View stream via FFPLAY
         case "2":

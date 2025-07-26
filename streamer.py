@@ -21,14 +21,20 @@ def startstream(protocol, ip, port):
     print("Your stream is now available at: " + protocol + "://" + ip + ":" + str(port))
     return streamer  # Return the streamer process
 
-def play_video(file, output_pipe):
+def play_video(file, output_pipe,timestamp):
     """Plays a single media file and pipes the MPEG-TS stream to the provided pipe."""
     try:
         print(f"Now playing: {file}")
 
-        feeder = subprocess.Popen([
-            "ffmpeg",
-            "-re",
+        # Prepare the ffmpeg command to feed the video file
+        feeder = ["ffmpeg", "-re"]
+
+        # if timestamp is provided, use it to seek to the correct position
+        if timestamp:
+            feeder += ["-ss", str(timestamp)]
+
+        # Add the rest of the ffmpeg command
+        feeder += [
             "-i", file,
             "-c:v", "libx264",
             "-preset", "fast",
@@ -43,10 +49,17 @@ def play_video(file, output_pipe):
             "-ar", "48000",
             "-f", "mpegts",
             "-"
-        ], stdout=output_pipe)
+        ]
 
-        feeder.wait()
+        # Execute the feeder command
+        feeder = subprocess.Popen(feeder, stdout=output_pipe, stderr=subprocess.PIPE)
+        _, err = feeder_proc.communicate()
+        print(err.decode())
+        
         if feeder.returncode != 0:
             print(f"[!ERROR] Feeder process failed with return code {feeder.returncode}")
+
     except Exception as e:
         print(f"[!ERROR] An error occurred while playing video: {e}")
+    except KeyboardInterrupt:
+        print("Stream interrupted by user.")
