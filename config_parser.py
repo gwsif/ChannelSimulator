@@ -25,12 +25,3 @@ def parse_config(filepath):
         print(f"Error: Configuration file not found at {filepath}")
         return None
     return config
-
-# Probably delete the following
-#if __name__ == "__main__":
-#    # Example usage if you run this script directly
-#    config_data = parse_config('my_config.txt')  # Assuming your text file is named 'my_config.txt'
-#    if config_data:
-#        print("Parsed configuration:")
-#        for key, value in config_data.items():
-#            print(f"{key}: {value}")

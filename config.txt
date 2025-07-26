@@ -1,4 +1,4 @@
 # STREAM SETTINGS
-protocol = udp
+protocol = rtp
 ip = 239.255.0.1
 port = 1234
