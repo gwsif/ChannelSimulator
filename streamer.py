@@ -11,6 +11,8 @@ def startstream(protocol, ip, port):
         "-f", "mpegts",
         "-i", "-",
         "-c", "copy",
+        "-map", "0:v:0",
+        "-map", "0:a:0",
         "-f", "rtp_mpegts",
         "-metadata", "service_name=Channel-Simulator-0.4",
         "-metadata", "service_provider=Channel-Simulator",
@@ -53,7 +55,7 @@ def play_video(file, output_pipe,timestamp):
 
         # Execute the feeder command
         feeder = subprocess.Popen(feeder, stdout=output_pipe, stderr=subprocess.PIPE)
-        _, err = feeder_proc.communicate()
+        _, err = feeder.communicate()
         print(err.decode())
         
         if feeder.returncode != 0:

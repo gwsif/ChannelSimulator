@@ -1,5 +1,5 @@
 # MEDIA SETTINGS (hardcoded values for now)
-video0 = C:\Users\blupu\OneDrive\Videos\Cartoons\Two Stupid Dogs\2 Stupid Dogs - 1x01 - (Door Jam) - (Goldflipper) - (Where's The Bone) -DarkDream-.mp4
-video1 = C:\Users\blupu\OneDrive\Videos\Cartoons\Two Stupid Dogs\2 Stupid Dogs - 1x02 - (Cornflakes) - (Greg) - (Home Is Where Your Head Is) -DarkDream-.mp4
-video2 = C:\Users\blupu\OneDrive\Videos\Cartoons\Two Stupid Dogs\2 Stupid Dogs - 1x03 - (Vegas Buffet) - (Quark) - (Love In The Park) -DarkDream-.mp4
-video3 = C:\Users\blupu\OneDrive\Videos\Cartoons\Two Stupid Dogs\2 Stupid Dogs - 1x04 - (Show And Tell) - (Queen Bea) - (At The Drive In) -DarkDream-.mp4
+video0 = C:\Users\blupu\Videos\Cartoons\Two Stupid Dogs\2 Stupid Dogs - 1x01 - (Door Jam) - (Goldflipper) - (Where's The Bone) -DarkDream-.mp4
+video1 = C:\Users\blupu\Videos\Cartoons\Two Stupid Dogs\2 Stupid Dogs - 1x02 - (Cornflakes) - (Greg) - (Home Is Where Your Head Is) -DarkDream-.mp4
+video2 = C:\Users\blupu\Videos\Cartoons\Two Stupid Dogs\2 Stupid Dogs - 1x03 - (Vegas Buffet) - (Quark) - (Love In The Park) -DarkDream-.mp4
+video3 = C:\Users\blupu\Videos\Cartoons\Two Stupid Dogs\2 Stupid Dogs - 1x04 - (Show And Tell) - (Queen Bea) - (At The Drive In) -DarkDream-.mp4

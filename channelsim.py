@@ -47,7 +47,7 @@ print("[SYSTEM] Media config loaded successfully!")
 
 # Print system status and continue to main program
 print("[SYSTEM] CONFIGS LOADED! Starting Channel Simulator...")
-print("\n")
+print("--------------------------------------------------------")
 
 #############
 # ENTRY MENU
@@ -106,10 +106,22 @@ while True:
         
             # Load the chosen video into the stream and, if its the start of the show
             #    (ie comm_break == 0), play it from the start and not the active_video_ts!
-            
-            if active_video_ts is None or comm_break == 0:
-                print("[DEBUG] No timestamp found or this is the first commercial break, playing from start.")
-                active_video_ts = None
+
+            # if the active_video_ts is none then we have no timestamps so set comm_break to -1 to indicate it
+            if active_video_ts is None:
+                print("[SYSTEM] No timestamp file found for current video. Playing from start.")
+                comm_break = -1
+                
+                # Debug message
+                print("[DEBUG] channelsim.py comm_break value is " + str(comm_break))
+
+            # if comm_break is 0 then play from start up to first time stamp
+            if comm_break == 0:
+                print("[SYSTEM] Timestamp loaded. Playing from start to first alloted timestamp.")
+
+            #if active_video_ts is None or comm_break == 0:
+            #    print("[SYSTEM] No timestamp loaded or this is the first commercial break, playing from start.")
+            #    active_video_ts = None
             
             # Streamer will play from start if active_video_ts is None and comm_break is 0 but will
             #   play video if active_video_ts is not None AND comm_break is greater than 0 (meaning

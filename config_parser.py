@@ -38,7 +38,7 @@ def parse_timestamps(filepath):
     """
     timestamps = []
     try:
-        with open(filepath, 'r') as f:
+        with open(filepath, 'r', encoding='utf-8-sig') as f:
             for line in f:
                 line = line.strip()  # Remove leading/trailing whitespace
                 if line and not line.startswith('#'):  # Ignore empty lines and comments
