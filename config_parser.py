@@ -47,3 +47,18 @@ def parse_timestamps(filepath):
         print(f"Error: Timestamp file not found at {filepath}")
         return None
     return timestamps
+
+# Parse a list of filepaths
+def parse_list_of_files(filepath):
+    """
+    Parses a txt configuration file with one item per line and returns a list of strings.
+    """
+    # start
+    try:
+        with open(filepath, 'r') as f:
+            items = [line.strip() for line in f if line.strip() and not line.startswith('#')]
+    except FileNotFoundError:
+        print(f"[!ERROR]: List configuration file not found at {filepath}")
+        return None
+    return items
+

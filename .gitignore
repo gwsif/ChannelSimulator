@@ -1,3 +1,5 @@
 old/
 __pycache__
 *.pyc
+__pycache__/config_parser.cpython-312.pyc
+__pycache__/streamer.cpython-312.pyc

@@ -23,17 +23,31 @@ def startstream(protocol, ip, port):
     print("Your stream is now available at: " + protocol + "://" + ip + ":" + str(port))
     return streamer  # Return the streamer process
 
-def play_video(file, output_pipe,timestamp):
-    """Plays a single media file and pipes the MPEG-TS stream to the provided pipe."""
+# PLAY VIDEO FUNCTION
+def play_video(file, output_pipe,timestamp, resume=False):
+    """Plays a single media file and pipes the MPEG-TS stream to the provided pipe. If a timestamp is provided, it will play until that timestamp. 
+    If resume is True, it will resume playback from the provided timestamp."""
     try:
-        print(f"Now playing: {file}")
+        if resume:
+        # if resume is true echo that we are resume playback from the timestamp.
+            print(f"Resuming Playback: {file} from timestamp {timestamp}")
+            print(f"[DEBUG] next timestamp is {timestamp}")
+        else:
+            # if resume is false echo that we are playing the video from the start until the timestamp
+            print(f"Now playing: {file} from start until {timestamp}")
 
         # Prepare the ffmpeg command to feed the video file
         feeder = ["ffmpeg", "-re"]
 
-        # if timestamp is provided, use it to seek to the correct position
-        if timestamp:
-            feeder += ["-ss", str(timestamp)]
+        # if resume is false, try to start the video from the beginning
+        if not resume:
+            if timestamp:
+                feeder += ["-to", str(timestamp)]
+
+        # Otherwise, if resume is true, we will start the video from the timestamp
+        else:
+            if timestamp:
+                feeder += ["-ss", str(timestamp)]
 
         # Add the rest of the ffmpeg command
         feeder += [
@@ -47,21 +61,28 @@ def play_video(file, output_pipe,timestamp):
             "-b:v", "1500k",
             "-maxrate", "2000k",
             "-bufsize", "4000k",
-            "-c:a", "copy",
+            "-c:a", "aac",
+            "-b:a", "128k",
             "-ar", "48000",
             "-f", "mpegts",
             "-"
         ]
 
-        # Execute the feeder command
-        feeder = subprocess.Popen(feeder, stdout=output_pipe, stderr=subprocess.PIPE)
-        _, err = feeder.communicate()
-        print(err.decode())
+        process = subprocess.Popen(feeder, stdout=output_pipe, stderr=subprocess.DEVNULL)
+
+        # Return the process object so the caller can monitor it
+        return process
+    
+        # Execute the feeder command and handle some errors
+        #feeder = subprocess.Popen(feeder, stdout=output_pipe, stderr=subprocess.PIPE)
+        #_, err = feeder.communicate()
+        #print(err.decode())
         
-        if feeder.returncode != 0:
-            print(f"[!ERROR] Feeder process failed with return code {feeder.returncode}")
+        #if feeder.returncode != 0:
+        #    print(f"[!ERROR] Feeder process failed with return code {feeder.returncode}")
 
     except Exception as e:
         print(f"[!ERROR] An error occurred while playing video: {e}")
     except KeyboardInterrupt:
         print("Stream interrupted by user.")
+        return None
