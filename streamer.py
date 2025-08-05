@@ -30,7 +30,7 @@ def play_video(file, output_pipe,timestamp, resume=False):
     try:
         if resume:
         # if resume is true echo that we are resume playback from the timestamp.
-            print(f"Resuming Playback: {file} from timestamp {timestamp}")
+            print(f"Resuming Playback: {file}")
             print(f"[DEBUG] next timestamp is {timestamp}")
         else:
             # if resume is false echo that we are playing the video from the start until the timestamp
@@ -72,14 +72,6 @@ def play_video(file, output_pipe,timestamp, resume=False):
 
         # Return the process object so the caller can monitor it
         return process
-    
-        # Execute the feeder command and handle some errors
-        #feeder = subprocess.Popen(feeder, stdout=output_pipe, stderr=subprocess.PIPE)
-        #_, err = feeder.communicate()
-        #print(err.decode())
-        
-        #if feeder.returncode != 0:
-        #    print(f"[!ERROR] Feeder process failed with return code {feeder.returncode}")
 
     except Exception as e:
         print(f"[!ERROR] An error occurred while playing video: {e}")

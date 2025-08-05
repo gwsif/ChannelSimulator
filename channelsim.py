@@ -169,20 +169,25 @@ while True:
                             ad_process.wait()
                             print("[SYSTEM] Commercial block finished.")
 
-                        # After commercials, evaluate where to go next
                         # if the commercial break counter is less than the number of timestamps we have then assume no
-                        # more commercial breaks are available and we need to load a new video.
-                        if comm_break < len(active_video_ts):
+                        #   more commercial breaks are available and we need to load a new video.
+                        
+                        # Try to get the timestamps for the current video.
+                        active_video_ts = media_controller.get_timestamps(active_video, comm_break)
+                        
+                        # if get_timestamps returns something other than None, then we have another timestamp to use.
+                        if active_video_ts is not None:
                             # If there are more timestamps, get the next timestamp
-                            active_video_ts = media_controller.get_timestamps(active_video, comm_break)
                             print("[DEBUG] Next timestamp for commercial break: " + str(active_video_ts))
                             resume = True  # Set resume to True to continue from the next timestamp
                         else:
                             # If no more timestamps, choose a new video
                             print("[SYSTEM] No more timestamps available. Choosing a new video.")
                             active_video = media_controller.choose_random_video(media)
+
                             print("[DEBUG] New active video chosen: " + str(active_video))
                             active_video_ts = media_controller.get_timestamps(active_video, comm_break)
+                            
                             print("[DEBUG] New active video timestamp: " + str(active_video_ts))
                             resume = False  # Reset resume to False for the new video
 

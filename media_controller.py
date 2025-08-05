@@ -47,7 +47,12 @@ def get_timestamps(videofile, comm_break):
         # get the timestamps of the chosen video
         active_video_timestamps = config_parser.parse_timestamps(str(active_video_ts_file))
         
-        return str(active_video_timestamps[comm_break])
+        # if we have another timestamp to use, then return it
+        if comm_break < len(active_video_timestamps):
+            return str(active_video_timestamps[comm_break])
+        else:
+            # we assume that no next timestamp exists so return None.
+            return None
     
     # Debug message if the timestamp file does not exist
     #print("[!ERROR] Ran get_timestamps but timestamp file does not exist for the current video.")
